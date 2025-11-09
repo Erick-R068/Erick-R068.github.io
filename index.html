@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erick Riquelme Yáñez - Portafolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para íconos (como el de menú, email, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Configuración de Tailwind y Fuentes -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-purple': '#8A2BE2', // Morado
+                        'brand-blue': '#4A90E2',   // Azul
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Estilos CSS personalizados -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a; /* Fondo negro ligeramente más suave */
+            color: #e0e0e0; /* Texto principal gris claro */
+        }
+
+        /* Estilo para el texto degradado (Azul a Morado) */
+        .gradient-text {
+            background-image: linear-gradient(to right, #4A90E2, #8A2BE2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Ocultar elementos para la animación */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(30px);
+        }
+
+        /* Clase que se añade con JS cuando el elemento es visible */
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Estilo para la barra de navegación "pegajosa" con efecto blur */
+        nav {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 10, 0.7); /* Fondo negro semi-transparente */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ===== BARRA DE NAVEGACIÓN ===== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 w-full shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo o Nombre -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-2xl font-bold gradient-text">E.R.Y.</a>
+                </div>
+                
+                <!-- Navegación de Escritorio -->
+                <div class="hidden md:block">
+                    <div id="nav-links" class="ml-10 flex items-baseline space-x-4">
+                        <!-- Los enlaces se generan dinámicamente -->
+                    </div>
+                </div>
+                
+                <!-- Botón de Menú Móvil -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Abrir menú principal</span>
+                        <i class="fas fa-bars fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil -->
+        <div class="md:hidden" id="mobile-menu" style="display: none;">
+            <div id="mobile-nav-links" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <!-- Los enlaces móviles se generan dinámicamente -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- ===== SECCIÓN INICIO (PORTADA) ===== -->
+        <section id="home" class="min-h-screen flex items-center justify-center text-center pt-16">
+            <!-- Contenedor con animación fade-in -->
+            <div class="fade-in">
+                <!-- Reemplazo de foto por iniciales -->
+                <div class="w-40 h-40 mx-auto rounded-full bg-gray-800 border-4 border-brand-purple mb-6 flex items-center justify-center shadow-lg">
+                    <span class="gradient-text text-5xl font-extrabold">ERY</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
+                    Hola, soy <span id="main-name" class="gradient-text"></span>
+                </h1>
+                <p id="main-title" class="text-xl md:text-2xl text-gray-300 mb-8"></p>
+                <div id="social-links" class="flex justify-center space-x-6">
+                    <!-- Los enlaces sociales se generan dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN SOBRE MÍ (PERFIL) ===== -->
+        <section id="about" class="py-24 fade-in">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Sobre Mí</h2>
+            <p id="profile-description" class="text-lg text-gray-300 max-w-3xl mx-auto text-center leading-relaxed">
+            </p>
+        </section>
+
+        <!-- ===== SECCIÓN HABILIDADES ===== -->
+        <section id="skills" class="py-24 fade-in">
+            <h2 class="text-3xl font-bold text-center mb-16 gradient-text">Habilidades Técnicas</h2>
+            <div id="skills-container" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 max-w-5xl mx-auto">
+                <!-- Las habilidades se generan dinámicamente -->
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN EXPERIENCIA ===== -->
+        <section id="experience" class="py-24 fade-in">
+            <h2 class="text-3xl font-bold text-center mb-16 gradient-text">Experiencia Profesional</h2>
+            <!-- Línea de tiempo vertical -->
+            <div id="experience-container" class="relative max-w-3xl mx-auto pl-10 border-l-2 border-brand-purple">
+                <!-- La experiencia se genera dinámicamente -->
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN PROYECTOS ===== -->
+        <section id="projects" class="py-24 fade-in">
+            <h2 class="text-3xl font-bold text-center mb-16 gradient-text">Proyectos Destacados</h2>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Los proyectos se generan dinámicamente -->
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN SERVICIOS ===== -->
+        <section id="services" class="py-24 fade-in">
+            <h2 class="text-3xl font-bold text-center mb-16 gradient-text">Servicios</h2>
+            <div id="services-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Los servicios se generan dinámicamente -->
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN CERTIFICACIONES ===== -->
+        <section id="certifications" class="py-24 fade-in">
+            <h2 class="text-3xl font-bold text-center mb-16 gradient-text">Certificaciones y Cursos</h2>
+            <ul id="certifications-list" class="space-y-4 max-w-2xl mx-auto text-center">
+                <!-- Las certificaciones se generan dinámicamente -->
+            </ul>
+        </section>
+
+        <!-- ===== SECCIÓN CARTA DE PRESENTACIÓN ===== -->
+        <section id="cover-letter" class="py-24 fade-in">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Carta de Presentación</h2>
+            <div class="max-w-3xl mx-auto bg-gray-800 rounded-lg p-8 shadow-lg">
+                <p id="cover-letter-intro" class="text-lg text-gray-300 mb-6"></p>
+                <div id="cover-letter-body" class="text-gray-300 leading-relaxed space-y-4">
+                    <!-- Párrafos de la carta -->
+                </div>
+                <p id="cover-letter-outro" class="text-lg text-gray-300 mt-6"></p>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN CONTACTO ===== -->
+        <section id="contact" class="py-24 fade-in text-center">
+            <h2 class="text-3xl font-bold text-center mb-8 gradient-text">Contacto</h2>
+            <p class="text-lg text-gray-300 mb-8">Siempre estoy abierto a conectar. No dudes en contactarme.</p>
+            <a id="contact-email" href="" class="inline-block bg-gradient-to-r from-brand-blue to-brand-purple text-white font-bold py-3 px-8 rounded-full text-lg hover:opacity-90 transition-opacity duration-300">
+                <i class="fas fa-envelope mr-2"></i> Enviar Correo
+            </a>
+            <div id="social-links-footer" class="flex justify-center space-x-6 mt-12">
+                <!-- Los enlaces sociales se generan dinámicamente -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="text-center py-8 border-t border-gray-800">
+        <p class="text-gray-500">&copy; <span id="footer-year"></span> <span id="footer-name"></span>. Todos los derechos reservados.</p>
+    </footer>
+
+
+    <!-- ================================================================================= -->
+    <!-- ===== CONFIGURACIÓN DEL PORTAFOLIO ===== -->
+    <!-- ================================================================================= -->
+    <script>
+
+        const portfolioConfig = {
+            // ----- Portada (Home) -----
+            name: "Erick Riquelme Yáñez",
+            title: "Ingeniero en Computación e Informática | Backend Developer",
+
+            // ----- Contacto y Redes Sociales -----
+            contactEmail: "erick.riquelme.y@gmail.com",
+            linkedin: "https://linkedin.com/in/erick-riquelme-y",
+            github: "https://github.com/Erick-R068", // Añade tu usuario de GitHub
+
+            // ----- Sobre Mí (Perfil) -----
+            profileDescription: "Ingeniero de Software enfocado en Backend, con experiencia reciente en migración de servicios y diseño de orquestaciones de datos. Especializado en arquitectura cloud en GCP y la construcción y optimización de backend escalable en Python.",
+
+            // ----- Habilidades -----
+            skills: [
+                { name: "Python", iconUrl: "https://cdn.simpleicons.org/python/3776AB" },
+                { name: "JavaScript", iconUrl: "https://cdn.simpleicons.org/javascript/F7DF1E" },
+                { name: "Google Cloud", iconUrl: "https://cdn.simpleicons.org/googlecloud/4285F4" },
+                { name: "Amazon AWS", iconUrl: "https://www.pngall.com/wp-content/uploads/13/AWS-Logo-PNG-File.png" },
+                { name: "React", iconUrl: "https://cdn.simpleicons.org/react/61DAFB" },
+                { name: "Vertex AI", iconUrl: "https://www.gstatic.com/lamda/images/gemini_sparkle_aurora_33f86dc0c0257da337c63.svg" }, 
+                { name: "Flask", iconUrl: "https://cdn.simpleicons.org/flask/FFFFFF" },
+                { name: "Celery", iconUrl: "https://cdn.simpleicons.org/celery/37A111" },
+                { name: "Redis", iconUrl: "https://cdn.simpleicons.org/redis/DC382D" },
+                { name: "PostgreSQL", iconUrl: "https://cdn.simpleicons.org/postgresql/4169E1" },
+                { name: "MongoDB", iconUrl: "https://cdn.simpleicons.org/mongodb/47A248" },
+                { name: "C++", iconUrl: "https://cdn.simpleicons.org/cplusplus/00599C" },
+                { name: "Scrum", iconUrl: "https://cdn.simpleicons.org/scrumalliance/0093D1" },
+            ],
+
+            // ----- Experiencia Profesional -----
+            experience: [
+                {
+                    role: "Software Engineer",
+                    company: "Equifax (vía 23people)",
+                    period: "Ene 2025 - Presente",
+                    description: "Responsable del desarrollo y migración de servicios de consumo de datos. Diseño e implementación de orquestaciones de datos. Refactorización y rediseño de servicios Legacy (de .NET/SQL/C++ a Python)."
+                },
+                {
+                    role: "Desarrollador Full Stack",
+                    company: "Multicloud-X",
+                    period: "2024",
+                    description: "Diseño e integración de APIs RESTful y asíncronas. Gestión de base de datos SQL y NoSQL. Implementación de infraestructuras en la nube con AWS y GCP. Relator de webinars."
+                }
+            ],
+
+            // ----- Proyectos Destacados -----
+            projects: [
+                {
+                    name: "QuickFlow - GCP (Asistente RAG)",
+                    description: "Desarrollo líder de un chatbot empresarial basado en Gemini (Vertex AI) en GCP, integrando recuperación de archivos (RAG).",
+                    technologies: ["Python", "Vertex AI", "Flask", "Redis", "Celery", "GCP"],
+                    imageUrl: "https://placehold.co/600x400/1a1a1a/4A90E2?text=QuickFlow+GCP", // Reemplazar con una captura
+                    link: "#"
+                },
+                {
+                    name: "Migración de Servicios Legacy",
+                    description: "Refactorización y rediseño de servicios monolíticos (.NET/C++) a una arquitectura de microservicios moderna con Python y GCP.",
+                    technologies: ["Python", "GCP", ".NET", "C++", "SQL"],
+                    imageUrl: "https://placehold.co/600x400/1a1a1a/8A2BE2?text=Migraci%C3%B3n+Legacy",
+                    link: "#"
+                },
+                {
+                    name: "Plataforma Orquestación de Datos",
+                    description: "Diseño e implementación de un sistema para orquestar flujos de trabajo de consumo y procesamiento de datos a gran escala.",
+                    technologies: ["Python", "GCP (Composer)", "BigQuery", "SQL"],
+                    imageUrl: "https://placehold.co/600x400/1a1a1a/4A90E2?text=Data+Orchestration",
+                    link: "#"
+                }
+            ],
+
+            // ----- Servicios (Basados en tus habilidades) -----
+            services: [
+                {
+                    name: "Desarrollo Backend",
+                    description: "Construcción de APIs RESTful y sistemas backend escalables y seguros con Python, Flask y bases de datos SQL/NoSQL.",
+                    icon: "fas fa-cogs" // Ícono de engranajes
+                },
+                {
+                    name: "Arquitectura Cloud (GCP/AWS)",
+                    description: "Diseño e implementación de infraestructuras en la nube, optimizadas para rendimiento, costo y seguridad.",
+                    icon: "fas fa-cloud" // Ícono de nube
+                },
+                {
+                    name: "Automatización y Orquestación",
+                    description: "Desarrollo de flujos de trabajo automatizados (ETL, RPA) y orquestación de datos a gran escala.",
+                    icon: "fas fa-robot" // Ícono de robot
+                }
+            ],
+
+            // ----- Certificaciones y Cursos -----
+            certifications: [
+                "Certificación: Cloud Digital Leader (GCP)",
+                "Certificación: Technical Accredited (AWS)",
+                "Curso: AWS - Architecting on AWS (2024)",
+                "Curso: AWS - Technical Essentials (2024)",
+                "Curso: GCP - Essential Google Cloud Infrastructure (2024)",
+                "Curso: AWS - Cloud Practitioner Essentials (2024)"
+            ],
+
+            // ----- Carta de Presentación -----
+            coverLetter: {
+                intro: "Mi nombre es Erick Riquelme, Ingeniero de Software enfocado en Backend y estudiante de Ingeniería en Computación e Informática.",
+                // Cada string en 'body' es un párrafo separado
+                body: [
+                    "Le escribo con interés por oportunidades de Software Engineer, ya que mi experiencia en arquitectura cloud y orquestaciones de datos se alinea con los desafíos actuales de la industria.",
+                    "Actualmente, me desempeño como Software Engineer en Equifax, donde participo en migraciones de servicios y diseño de orquestaciones de datos. Mi fortaleza técnica radica en la arquitectura de soluciones en Google Cloud Platform y el desarrollo backend avanzado con Python.",
+                    "En mi rol anterior en Multicloud-X, lideré el desarrollo de un chatbot empresarial basado en Gemini (Vertex AI), diseñando una API RESTful optimizada con Redis y Celery para gestionar consultas simultáneas de forma eficiente.",
+                    "Mi objetivo profesional es unirme a una empresa innovadora para resolver desafíos de datos a gran escala. Mi capacidad para diseñar e implementar sistemas de backend seguros y escalables, junto con mi fuerte habilidad de autoaprendizaje, serían un gran aporte."
+                ],
+                outro: "Quedo a disposición para continuar la conversación."
+            },
+
+            // ----- Navegación (Títulos de las secciones) -----
+            navLinks: [
+                { href: "#home", title: "Inicio" },
+                { href: "#about", title: "Sobre Mí" },
+                { href: "#skills", title: "Habilidades" },
+                { href: "#experience", title: "Experiencia" },
+                { href: "#projects", title: "Proyectos" },
+                { href: "#services", title: "Servicios" },
+                { href: "#certifications", title: "Cursos" },
+                { href: "#cover-letter", title: "Carta" },
+                { href: "#contact", title: "Contacto" }
+            ]
+        };
+
+
+        // =================================================================================
+        // ===== LÓGICA DE RENDERIZADO =====
+        // =================================================================================
+        // El script tomará la configuración de `portfolioConfig` y construirá la página.
+        // =================================================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Función principal para poblar la página
+            function initApp() {
+                populateHome();
+                populateSocialLinks();
+                populateAbout();
+                populateSkills();
+                populateExperience();
+                populateProjects();
+                populateServices();
+                populateCertifications();
+                populateCoverLetter();
+                populateContact();
+                populateFooter();
+                populateNavLinks();
+                setupMobileMenu();
+                setupScrollObserver(); // Activa las animaciones
+            }
+
+            // --- Funciones de Poblado de Secciones ---
+
+            function populateHome() {
+                document.getElementById('main-name').textContent = portfolioConfig.name;
+                document.getElementById('main-title').textContent = portfolioConfig.title;
+            }
+
+            function populateSocialLinks() {
+                const links = [
+                    // Se especifican las clases completas de Font Awesome (fas para solid, fab para brands)
+                    { href: `mailto:${portfolioConfig.contactEmail}`, icon: 'fas fa-envelope', title: 'Email' },
+                    { href: portfolioConfig.linkedin, icon: 'fab fa-linkedin', title: 'LinkedIn' },
+                    { href: portfolioConfig.github, icon: 'fab fa-github', title: 'GitHub' }
+                ];
+
+                const socialContainer = document.getElementById('social-links');
+                const footerSocialContainer = document.getElementById('social-links-footer');
+                
+                socialContainer.innerHTML = ''; // Limpiar
+                footerSocialContainer.innerHTML = ''; // Limpiar
+
+                links.forEach(link => {
+                    if (!link.href) return; // No añadir si no hay enlace
+                    const anchor = document.createElement('a');
+                    anchor.href = link.href;
+                    anchor.target = "_blank";
+                    anchor.rel = "noopener noreferrer";
+                    anchor.className = "text-gray-400 hover:text-brand-purple transition-colors duration-300";
+                    anchor.innerHTML = `<i class="${link.icon} fa-2x"></i>`;
+                    anchor.title = link.title;
+                    
+                    socialContainer.appendChild(anchor);
+                    footerSocialContainer.appendChild(anchor.cloneNode(true));
+                });
+            }
+
+            function populateAbout() {
+                document.getElementById('profile-description').textContent = portfolioConfig.profileDescription;
+            }
+
+            function populateSkills() {
+                const container = document.getElementById('skills-container');
+                container.innerHTML = '';
+                portfolioConfig.skills.forEach(skill => {
+                    const skillElement = `
+                        <div class="flex flex-col items-center text-center p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300">
+                            <img src="${skill.iconUrl}" alt="${skill.name}" class="h-12 w-12 mb-3">
+                            <span class="text-sm font-medium">${skill.name}</span>
+                        </div>
+                    `;
+                    container.innerHTML += skillElement;
+                });
+            }
+
+            function populateExperience() {
+                const container = document.getElementById('experience-container');
+                container.innerHTML = '';
+                portfolioConfig.experience.forEach((exp, index) => {
+                    const expElement = `
+                        <div class="mb-12">
+                            <!-- Punto en la línea de tiempo -->
+                            <div class="absolute -left-3.5 mt-1.5 w-6 h-6 bg-brand-blue rounded-full border-4 border-gray-900"></div>
+                            
+                            <h3 class="text-xl font-bold gradient-text">${exp.role}</h3>
+                            <p class="text-lg font-semibold text-gray-300">${exp.company}</p>
+                            <span class="text-sm text-gray-400">${exp.period}</span>
+                            <p class="mt-4 text-gray-300">${exp.description}</p>
+                        </div>
+                    `;
+                    container.innerHTML += expElement;
+                });
+            }
+
+            function populateProjects() {
+                const container = document.getElementById('projects-container');
+                container.innerHTML = '';
+                portfolioConfig.projects.forEach(project => {
+                    // Genera las "píldoras" de tecnología
+                    const techTags = project.technologies.map(tech => 
+                        `<span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2 py-1 rounded-full mr-2 mb-2">${tech}</span>`
+                    ).join('');
+
+                    const projectElement = `
+                        <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                            <img src="${project.imageUrl}" alt="${project.name}" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3 gradient-text">${project.name}</h3>
+                                <p class="text-gray-300 mb-4 h-20">${project.description}</p> <!-- Altura fija para alinear tarjetas -->
+                                <div class="mb-4">
+                                    ${techTags}
+                                </div>
+                                <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="font-medium text-brand-blue hover:text-brand-purple transition-colors duration-300">
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += projectElement;
+                });
+            }
+            
+            function populateServices() {
+                const container = document.getElementById('services-container');
+                container.innerHTML = '';
+                portfolioConfig.services.forEach(service => {
+                    const serviceElement = `
+                        <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center">
+                            <i class="${service.icon} fa-3x gradient-text mb-6"></i>
+                            <h3 class="text-xl font-bold text-white mb-3">${service.name}</h3>
+                            <p class="text-gray-300">${service.description}</p>
+                        </div>
+                    `;
+                    container.innerHTML += serviceElement;
+                });
+            }
+
+            function populateCertifications() {
+                const list = document.getElementById('certifications-list');
+                list.innerHTML = '';
+                portfolioConfig.certifications.forEach(cert => {
+                    const certElement = `
+                        <li class="text-lg text-gray-300"><i class="fas fa-check-circle text-brand-blue mr-3"></i>${cert}</li>
+                    `;
+                    list.innerHTML += certElement;
+                });
+            }
+            
+            function populateCoverLetter() {
+                document.getElementById('cover-letter-intro').textContent = portfolioConfig.coverLetter.intro;
+                const bodyContainer = document.getElementById('cover-letter-body');
+                bodyContainer.innerHTML = '';
+                // Añade cada párrafo del array 'body'
+                portfolioConfig.coverLetter.body.forEach(paragraph => {
+                    bodyContainer.innerHTML += `<p>${paragraph}</p>`;
+                });
+                document.getElementById('cover-letter-outro').textContent = portfolioConfig.coverLetter.outro;
+            }
+
+            function populateContact() {
+                const emailLink = document.getElementById('contact-email');
+                emailLink.href = `mailto:${portfolioConfig.contactEmail}`;
+            }
+
+            function populateFooter() {
+                document.getElementById('footer-year').textContent = new Date().getFullYear();
+                document.getElementById('footer-name').textContent = portfolioConfig.name;
+            }
+
+            function populateNavLinks() {
+                const navLinksContainer = document.getElementById('nav-links');
+                const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+                navLinksContainer.innerHTML = '';
+                mobileNavLinksContainer.innerHTML = '';
+
+                portfolioConfig.navLinks.forEach(link => {
+                    const desktopLink = `
+                        <a href="${link.href}" class="text-gray-300 hover:gradient-text hover:text-transparent px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300">${link.title}</a>
+                    `;
+                    const mobileLink = `
+                        <a href="${link.href}" class="text-gray-300 hover:gradient-text hover:text-transparent block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300">${link.title}</a>
+                    `;
+                    navLinksContainer.innerHTML += desktopLink;
+                    mobileNavLinksContainer.innerHTML += mobileLink;
+                });
+
+                // Añadir listeners a los enlaces móviles para cerrar el menú al hacer clic
+                mobileNavLinksContainer.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        document.getElementById('mobile-menu').style.display = 'none';
+                    });
+                });
+            }
+
+            // --- Lógica de Interacción ---
+
+            function setupMobileMenu() {
+                const menuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                menuButton.addEventListener('click', () => {
+                    const isVisible = mobileMenu.style.display === 'block';
+                    mobileMenu.style.display = isVisible ? 'none' : 'block';
+                });
+            }
+
+            // --- Animación de Scroll (Fade In) ---
+            function setupScrollObserver() {
+                const sections = document.querySelectorAll('.fade-in');
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible'); // Añade la clase 'visible'
+                            observer.unobserve(entry.target); // Para que la animación ocurra solo una vez
+                        }
+                    });
+                }, {
+                    root: null, // Observa en relación al viewport
+                    threshold: 0.1, // Se activa cuando el 10% del elemento es visible
+                    rootMargin: '0px'
+                });
+
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            }
+
+            // Iniciar
+            initApp();
+        });
+    </script>
+</body>
+</html>
